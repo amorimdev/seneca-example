@@ -1,0 +1,57 @@
+{
+  "name": "seneca-example",
+  "version": "1.0.0",
+  "description": "Seneca.js example to my blog https://amorim.dev",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "start-first-app": "node --inspect=9201 srv/first-app.js",
+    "start-second-app": "node --inspect=9202 srv/second-app.js",
+    "start-second-app-background": "./node_modules/forever/bin/forever start srv/second-app.js --silent >> /dev/null",
+    "stop-second-app-background": "./node_modules/forever/bin/forever stop srv/second-app.js --silent >> /dev/null",
+    "test": "npm run start-second-app-background && LOG_LEVEL=error nyc --check-coverage --lines 75 --functions 75 --reporter=html --reporter=text mocha -S test/*.test.js --exit && npm run stop-second-app-background",
+    "test-debugger": "npm run start-second-app-background && mocha --inspect-brk=9201 -S test/*.test.js --exit --timeout 0 && npm run stop-second-app-background",
+    "fixStyle": "./node_modules/eslint/bin/eslint.js ./ --fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "./node_modules/eslint/bin/eslint.js ./",
+      "pre-push": "npm test"
+    }
+  },
+  "nyc": {
+    "exclude": [
+      "coverage",
+      "test",
+      "srv"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/amorimdev/seneca-example.git"
+  },
+  "author": "Jhonatan Amorim <amorim.dev@gmail.com>",
+  "license": "GPL-3.0",
+  "homepage": "https://github.com/Btime/seneca-example#readme",
+  "dependencies": {
+    "seneca": "^3.11.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-mocha": "^5.3.0",
+    "eslint-plugin-node": "^9.0.1",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "forever": "^1.0.0",
+    "husky": "^2.3.0",
+    "mocha": "^6.1.4",
+    "nyc": "^14.1.1"
+  }
+}

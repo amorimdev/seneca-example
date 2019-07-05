@@ -1,0 +1,15 @@
+# Coverage directory used by tools like istanbul
+coverage
+.nyc_output
+
+# Dependency directories
+node_modules
+
+# Idea IDE cache directory
+.idea
+
+# Optional npm cache directory
+.npm
+
+# package lock
+package-lock.json
